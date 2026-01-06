@@ -1,0 +1,20 @@
+
+version: "3.8"
+services:
+  app:
+    image: dockerhubusername/express-app:latest #check username
+    container_name: express-app
+    ports:
+      - 8080:8080
+    restart: always
+    labels: "com.centurylinklabs.watchtower.enable=true"
+  watchtower:
+    image: containrrr/watchtower
+    #environment:
+    #  - WATCHTOWER_POLL_INTERVAL=60
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: watchtower
+    command: --interval 30 --label-enable
+    restart: always
+    # how to avoid that all images are updated -- see documention
